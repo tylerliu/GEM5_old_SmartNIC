@@ -67,7 +67,7 @@ unsigned totalTrans2 = 0;
 unsigned totalTrans3 = 0;
 
 #ifndef _SIM_
-int SHOW_SIM_OUTPUT = 1;
+int SHOW_SIM_OUTPUT = 0;
 ofstream visDataOut; //mostly used in MemoryController
 
 #ifdef RETURN_TRANSACTIONS

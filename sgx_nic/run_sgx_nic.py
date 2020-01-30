@@ -22,7 +22,7 @@ trillion = 1000000000000
 # once any nf reaches this number of ins, gem5 will enter real simulation. 
 # acl-fw warmup: 400k->5 Trillion ticks->10million ins
 fast_forward_ins = 2 * million
-final_ins = 2 * million
+final_ins = 100 * million
 # 1 * trillion: the benchmarking time.
 final_ticks = 2 * trillion
 
@@ -45,7 +45,7 @@ for i in range(1, 1 << 6):
             prog_set.append(nfinvoke[j])
     multiprog.append(prog_set)
 multiprog = list(filter(lambda x: len(x) > 1, multiprog))
-print(multiprog, len(multiprog))
+# print(multiprog, len(multiprog))
 
 def prog_set_to_cmd(prog_set):
     ret = ''
@@ -194,7 +194,7 @@ if __name__ == "__main__":
     num_cmd = len(all_commands)
     print(f'The number of gem5 simulations is {num_cmd}')
     num_par = int(num_cmd / 6) + 1
-    # run_gem5_sim(all_commands[0:num_par])
+    run_gem5_sim(all_commands[0:num_par])
     # run_gem5_sim(all_commands[num_par:num_par * 2])
     # run_gem5_sim(all_commands[num_par * 2:num_par * 3])
     # run_gem5_sim(all_commands[num_par * 3:num_par * 4])

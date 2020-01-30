@@ -194,7 +194,9 @@ def setup_dramsim(options):
 
     # num_cpus rounded up to nearest power of 2
     p2cores = int(pow( 2, ceil(log(np)/log(2)) ))
-    memorysize = str(32*p2cores) + 'GB'
+#     memorysize = str(32*p2cores) + 'GB'
+    memorysize = '16GB'
+
     
     ### instantiate the DRAMSim2 model if we enable it
     if options.dramsim2 :
@@ -242,11 +244,11 @@ def setup_dramsim(options):
 ###############################################################################
 def setup_cache(options):
     options.l1d_size="32kB"
-    options.l1d_assoc=2
-    options.l1i_size="32kB"
-    options.l1i_assoc=2
-    options.l2_size="256kB"
-    options.l2_assoc=8
+    options.l1d_assoc=32
+    options.l1i_size="78kB"
+    options.l1i_assoc=39
+#     options.l2_size="256kB"
+#     options.l2_assoc=8
                       
 
 ###############################################################################

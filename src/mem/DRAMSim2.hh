@@ -48,7 +48,7 @@
 DRAMSim::MultiChannelMemorySystem *dramsim2;
 
 // SHOW_SIM_OUT is required by DRAMSim2
-int SHOW_SIM_OUTPUT = 1;
+int SHOW_SIM_OUTPUT = 0;
 /**********************************************************************/
 
 typedef struct {
