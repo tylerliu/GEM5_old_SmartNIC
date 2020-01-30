@@ -66,7 +66,7 @@ unameFunc(SyscallDesc *desc, int callnum, LiveProcess *process,
 
     strcpy(name->sysname, "Linux");
     strcpy(name->nodename, "m5.eecs.umich.edu");
-    strcpy(name->release, "3.0.0");
+    strcpy(name->release, "4.4.0");
     strcpy(name->version, "#1 Mon Aug 18 11:32:15 EDT 2003");
     strcpy(name->machine, "armv7l");
 
@@ -108,7 +108,7 @@ SyscallDesc ArmLinuxProcess::syscallDescs[] = {
     /* 30 */ SyscallDesc("utime", unimplementedFunc),
     /* 31 */ SyscallDesc("unused#31", unimplementedFunc),
     /* 32 */ SyscallDesc("unused#32", unimplementedFunc),
-    /* 33 */ SyscallDesc("access", unimplementedFunc),
+    /* 33 */ SyscallDesc("access", ignoreFunc),
     /* 34 */ SyscallDesc("nice", unimplementedFunc),
     /* 35 */ SyscallDesc("unused#35", unimplementedFunc),
     /* 36 */ SyscallDesc("sync", unimplementedFunc),
@@ -261,7 +261,7 @@ SyscallDesc ArmLinuxProcess::syscallDescs[] = {
     /* 183 */ SyscallDesc("getcwd", getcwdFunc),
     /* 184 */ SyscallDesc("capget", unimplementedFunc),
     /* 185 */ SyscallDesc("capset", unimplementedFunc),
-    /* 186 */ SyscallDesc("sigaltstack", unimplementedFunc),
+    /* 186 */ SyscallDesc("sigaltstack", ignoreFunc),
     /* 187 */ SyscallDesc("sendfile", unimplementedFunc),
     /* 188 */ SyscallDesc("unused#188", unimplementedFunc),
     /* 189 */ SyscallDesc("unused#189", unimplementedFunc),
