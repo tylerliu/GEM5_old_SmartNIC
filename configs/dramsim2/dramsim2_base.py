@@ -194,7 +194,7 @@ def setup_dramsim(options):
 
     # num_cpus rounded up to nearest power of 2
     p2cores = int(pow( 2, ceil(log(np)/log(2)) ))
-    memorysize = str(1024*p2cores) + 'MB'
+    memorysize = str(32*p2cores) + 'GB'
     
     ### instantiate the DRAMSim2 model if we enable it
     if options.dramsim2 :

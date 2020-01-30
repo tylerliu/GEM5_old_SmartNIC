@@ -74,7 +74,7 @@ def optimized_thread_scaling
                        p1: other, tl1: tlp1, p2: other, tl2: tlp1 )
             sav_script( cpu, scheme, p0, diffperiod: true, tl0: tlp0, 
                        p1: other, tl1: tlp1, p2: other, tl2: tlp1,
-                       p3: other, tl3: tlp )
+                       p3: other, tl3: tlp1 )
         end
     end
 end

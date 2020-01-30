@@ -48,8 +48,8 @@ include RunScripts
 #------------------------------------------------------------------------------
 # Performance
 #----------------------------------------------------------------------------
-# baseline
-# scalability_local
+baseline
+scalability_local
 # scalability_qsub
 # breakdown
 # coordination
@@ -67,7 +67,7 @@ include RunScripts
 # membus_sweeping_qsub
 # memctl_sweeping_qsub
 # fa_sweeping_qsub
-hill_climb
+# hill_climb
 ###############################################################################
 # Memory Controller Tests
 ###############################################################################

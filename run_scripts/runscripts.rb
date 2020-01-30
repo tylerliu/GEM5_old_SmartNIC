@@ -233,13 +233,13 @@ def sav_script( cpu, scheme, p0, options = {} )
     FileUtils.mkdir_p( "stderr" ) unless File.directory?( "stderr" )
     FileUtils.mkdir_p( "stdout" ) unless File.directory?( "stdout" )
     
-    sleep(1)
+    # sleep(1)
 
     if runmode == :qsub
         success = system "qsub -wd #{$gem5home.path} -e stderr/ -o stdout/ #{script_abspath}"
     end
-    puts "#{filename}".magenta if runmode == :local
-    success = system "sh #{script_abspath}" if runmode == :local
+    # puts "#{filename}".magenta if runmode == :local
+    # success = system "sh #{script_abspath}" if runmode == :local
     [success,filename]
 end
 
@@ -336,7 +336,8 @@ def parallel_local_scaling opts={}
 end
 
 def qsub_scaling opts = {}
-  parallel_local_scaling opts.merge(runmode: :qsub)
+  # parallel_local_scaling opts.merge(runmode: :qsub)
+  parallel_local_scaling opts.merge(runmode: :none)
 end
 
 end
