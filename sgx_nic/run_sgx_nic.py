@@ -17,14 +17,23 @@ cpus = ['timing', 'detailed']
 modes = ['none', 'tp']
 # mem_size = '192GB'
 
-million = 1000000000
+million = 1000000
+billion = 1000000000
 trillion = 1000000000000
 # once any nf reaches this number of ins, gem5 will enter real simulation. 
-# acl-fw warmup: 400k->5 Trillion ticks->10million ins
-fast_forward_ins = 2 * million
+# acl-fw warmup: 400k->5 Trillion ticks->10billion ins
+fast_forward_ins = 2 * billion
 final_ins = 100 * million
+
+# fast_forward_ins = 10000
+# final_ins = 1000000
+
 # 1 * trillion: the benchmarking time.
 final_ticks = 2 * trillion
+
+# --fast-forward=1000000000 \
+# --maxinsts=1000000000 \
+# --maxtick=2000000000000000 \
 
 def bit_num(x):
     cnt = 0
@@ -85,7 +94,7 @@ def cache_partition():
                     command = "#!/bin/bash\n"
                     command += "build/ARM/gem5.fast \\\n"
                     command += "    --remote-gdb-port=0 \\\n"
-                    command += "    --outdir=/users/yangzhou/gem5/sgx_nic/m5out/" + filename + " \\\n"
+                    command += "    --outdir=/users/yangzhou/GEM5_DRAMSim2/sgx_nic/m5out/" + filename + " \\\n"
                     command += "    --stats-file=" + filename + "_stats.txt \\\n"
                     command += "    configs/dramsim2/dramsim2_se.py \\\n"
                     command += "    --cpu-type=" + cpu + " --clock=2.4GHz \\\n"
@@ -134,7 +143,7 @@ def bus_arbitor():
                 command = "#!/bin/bash\n"
                 command += "build/ARM/gem5.fast \\\n"
                 command += "    --remote-gdb-port=0 \\\n"
-                command += "    --outdir=/users/yangzhou/gem5/sgx_nic/m5out/" + filename + " \\\n"
+                command += "    --outdir=/users/yangzhou/GEM5_DRAMSim2/sgx_nic/m5out/" + filename + " \\\n"
                 command += "    --stats-file=" + filename + "_stats.txt \\\n"
                 command += "    configs/dramsim2/dramsim2_se.py \\\n"
                 command += "    --cpu-type=" + cpu + " --clock=2.4GHz \\\n"
