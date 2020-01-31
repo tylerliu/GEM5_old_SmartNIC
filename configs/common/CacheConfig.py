@@ -139,30 +139,51 @@ def config_l1( options, system ):
 # L2
 #------------------------------------------------------------------------------
 def config_l2( options, system ):
-    system.l2 = [ 
-            L2Cache( 
-                size = options.l2_size,
-                assoc = options.l2_assoc,
-                save_trace = options.do_cache_trace,
-                l3_trace_file = options.l2tracefile,
-                block_size=options.cacheline_size 
-            ) 
-            for i in xrange( options.num_cpus )
-        ]
-    system.tol2bus = [NoncoherentBus() for i in xrange( options.num_cpus )]
+    if options.l2config == 'private':
+        system.l2 = [ 
+                L2Cache( 
+                    size = options.l2_size,
+                    assoc = options.l2_assoc,
+                    save_trace = options.do_cache_trace,
+                    l3_trace_file = options.l2tracefile,
+                    block_size=options.cacheline_size 
+                ) 
+                for i in xrange( options.num_cpus )
+            ]
+        system.tol2bus = [NoncoherentBus() for i in xrange( options.num_cpus )]
+    else:
+        system.l2 = L2Cache( 
+                    size = options.l2_size,
+                    assoc = options.l2_assoc,
+                    save_trace = options.do_cache_trace,
+                    l3_trace_file = options.l2tracefile,
+                    block_size=options.cacheline_size 
+                ) 
+        system.tol2bus = NoncoherentBus()
+            
 
 # Connect private L2 caches to the cached ports of each cpu (usually l1)
 # through system.tol2bus
 def connect_l2( options, system ):
-    for i in xrange(options.num_cpus):
-        if options.l2cache:
-            system.cpu[i].connectAllPorts(system.tol2bus[i])
-            system.l2[i].cpu_side = system.tol2bus[i].master
-            if not options.l3cache:
-                system.l2[i].mem_side = system.membus.slave
-        else:
-            system.cpu[i].connectAllPorts(system.membus)
-
+    if options.l2config == 'private':
+        for i in xrange(options.num_cpus):
+            if options.l2cache:
+                system.cpu[i].connectAllPorts(system.tol2bus[i])
+                system.l2[i].cpu_side = system.tol2bus[i].master
+                if not options.l3cache:
+                    system.l2[i].mem_side = system.membus.slave
+            else:
+                system.cpu[i].connectAllPorts(system.membus)
+    else:
+        for i in xrange(options.num_cpus):
+            if options.l2cache:
+                system.cpu[i].connectAllPorts(system.tol2bus)
+            else:
+                system.cpu[i].connectAllPorts(system.membus)
+        system.l2.cpu_side = system.tol2bus.master
+        if not options.l3cache:
+            system.l2.mem_side = system.membus.slave
+        
 
 def config_cache(options, system):
 

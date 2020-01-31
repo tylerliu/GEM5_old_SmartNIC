@@ -106,6 +106,7 @@ def add_options():
                 help="membus response layer turn length")
         parser.add_option("--membusresp_offset", type="int", default=0,
                 help="membus response layer offset")
+        parser.add_option("--l2config", type="string", default="private")
                 
         parser.add_option("--p0", type="string", 
                 help="workload for processor 0."),
