@@ -94,3 +94,4 @@ sgx_nic/scriptgen/
 sgx_nic/m5out/
 sgx_nic/stderr/
 sgx_nic/stdout/
+sgx_nic/run1/
