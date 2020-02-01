@@ -1,0 +1,401 @@
+{
+    "name": null, 
+    "system": {
+        "membus": {
+            "save_trace": false, 
+            "slave": {
+                "peer": [
+                    "system.system_port", 
+                    "system.l2.mem_side"
+                ], 
+                "role": "SLAVE"
+            }, 
+            "name": "membus", 
+            "clock": 1e-09, 
+            "header_cycles": 1, 
+            "width": 8, 
+            "use_default_range": false, 
+            "master": {
+                "peer": [
+                    "system.physmem.port"
+                ], 
+                "role": "MASTER"
+            }, 
+            "cxx_class": "NoncoherentBus", 
+            "path": "system.membus", 
+            "block_size": 64, 
+            "type": "NoncoherentBus"
+        }, 
+        "save_trace": false, 
+        "physmem": {
+            "p0Period": 64, 
+            "zero": false, 
+            "save_trace": false, 
+            "split_ports": false, 
+            "cxx_class": "DRAMSim2", 
+            "fixAddr": false, 
+            "port": {
+                "peer": "system.membus.master[0]", 
+                "role": "SLAVE"
+            }, 
+            "latency": 3.0000000000000004e-08, 
+            "null": false, 
+            "in_addr_map": true, 
+            "clock": 1, 
+            "cpu_clock": 4.166666666666667e-10, 
+            "trace_addr": 0, 
+            "p1Period": 64, 
+            "type": "DRAMSim2", 
+            "numPids": 1, 
+            "conf_table_reported": false, 
+            "offset": 0, 
+            "path": "system.physmem", 
+            "genTrace": false, 
+            "name": "physmem", 
+            "diffPeriod": false, 
+            "latency_var": 0.0, 
+            "finalStatsOnly": true, 
+            "addr_trace": false
+        }, 
+        "cxx_class": "System", 
+        "fixAddr": false, 
+        "work_end_ckpt_count": 0, 
+        "clock": 1, 
+        "work_begin_ckpt_count": 0, 
+        "tol2bus": [
+            {
+                "save_trace": false, 
+                "slave": {
+                    "peer": [
+                        "system.cpu.icache.mem_side", 
+                        "system.cpu.dcache.mem_side", 
+                        "system.cpu.itb.walker.port", 
+                        "system.cpu.dtb.walker.port"
+                    ], 
+                    "role": "SLAVE"
+                }, 
+                "name": "tol2bus", 
+                "clock": 1e-09, 
+                "header_cycles": 1, 
+                "width": 8, 
+                "use_default_range": false, 
+                "master": {
+                    "peer": [
+                        "system.l2.cpu_side"
+                    ], 
+                    "role": "MASTER"
+                }, 
+                "cxx_class": "NoncoherentBus", 
+                "path": "system.tol2bus", 
+                "block_size": 64, 
+                "type": "NoncoherentBus"
+            }
+        ], 
+        "work_end_exit_count": 0, 
+        "type": "System", 
+        "numPids": 1, 
+        "work_cpus_ckpt_count": 0, 
+        "work_begin_exit_count": 0, 
+        "path": "system", 
+        "switch_cpus": [
+            {
+                "save_trace": false, 
+                "do_statistics_insts": true, 
+                "numThreads": 1, 
+                "itb": {
+                    "name": "itb", 
+                    "cxx_class": "ArmISA::TLB", 
+                    "walker": {
+                        "save_trace": false, 
+                        "name": "walker", 
+                        "clock": 1, 
+                        "cxx_class": "ArmISA::TableWalker", 
+                        "path": "system.switch_cpus.itb.walker", 
+                        "type": "ArmTableWalker"
+                    }, 
+                    "path": "system.switch_cpus.itb", 
+                    "type": "ArmTLB", 
+                    "size": 64
+                }, 
+                "function_trace": false, 
+                "do_checkpoint_insts": true, 
+                "cxx_class": "TimingSimpleCPU", 
+                "max_loads_all_threads": 0, 
+                "clock": 4.166666666666667e-10, 
+                "function_trace_start": 0, 
+                "cpu_id": 0, 
+                "do_quiesce": true, 
+                "type": "TimingSimpleCPU", 
+                "profile": 0.0, 
+                "defer_registration": true, 
+                "max_insts_all_threads": 0, 
+                "path": "system.switch_cpus", 
+                "name": "switch_cpus", 
+                "dtb": {
+                    "name": "dtb", 
+                    "cxx_class": "ArmISA::TLB", 
+                    "walker": {
+                        "save_trace": false, 
+                        "name": "walker", 
+                        "clock": 1, 
+                        "cxx_class": "ArmISA::TableWalker", 
+                        "path": "system.switch_cpus.dtb.walker", 
+                        "type": "ArmTableWalker"
+                    }, 
+                    "path": "system.switch_cpus.dtb", 
+                    "type": "ArmTLB", 
+                    "size": 64
+                }, 
+                "max_insts_any_thread": 100000000, 
+                "progress_interval": 0.0, 
+                "max_loads_any_thread": 0, 
+                "tracer": {
+                    "path": "system.switch_cpus.tracer", 
+                    "type": "ExeTracer", 
+                    "name": "tracer", 
+                    "cxx_class": "Trace::ExeTracer"
+                }
+            }
+        ], 
+        "mem_mode": "atomic", 
+        "name": "system", 
+        "init_param": 0, 
+        "system_port": {
+            "peer": "system.membus.slave[0]", 
+            "role": "MASTER"
+        }, 
+        "load_addr_mask": 1099511627775, 
+        "cpu": [
+            {
+                "save_trace": false, 
+                "do_statistics_insts": true, 
+                "numThreads": 1, 
+                "itb": {
+                    "name": "itb", 
+                    "cxx_class": "ArmISA::TLB", 
+                    "walker": {
+                        "save_trace": false, 
+                        "name": "walker", 
+                        "clock": 1, 
+                        "cxx_class": "ArmISA::TableWalker", 
+                        "path": "system.cpu.itb.walker", 
+                        "type": "ArmTableWalker", 
+                        "port": {
+                            "peer": "system.tol2bus.slave[2]", 
+                            "role": "MASTER"
+                        }
+                    }, 
+                    "path": "system.cpu.itb", 
+                    "type": "ArmTLB", 
+                    "size": 64
+                }, 
+                "function_trace": false, 
+                "do_checkpoint_insts": true, 
+                "cxx_class": "AtomicSimpleCPU", 
+                "max_loads_all_threads": 0, 
+                "clock": 4.166666666666667e-10, 
+                "simulate_data_stalls": false, 
+                "function_trace_start": 0, 
+                "cpu_id": 0, 
+                "width": 1, 
+                "do_quiesce": true, 
+                "type": "AtomicSimpleCPU", 
+                "fastmem": false, 
+                "profile": 0.0, 
+                "icache_port": {
+                    "peer": "system.cpu.icache.cpu_side", 
+                    "role": "MASTER"
+                }, 
+                "icache": {
+                    "save_trace": false, 
+                    "use_way_part": false, 
+                    "cxx_class": "BaseCache", 
+                    "write_buffers": 8, 
+                    "is_top_level": true, 
+                    "block_size": 128, 
+                    "size": 79872, 
+                    "latency": 1e-09, 
+                    "clock": 1, 
+                    "num_tcs": 2, 
+                    "trace_addr": 0, 
+                    "max_miss_count": 0, 
+                    "mem_side": {
+                        "peer": "system.tol2bus.slave[0]", 
+                        "role": "MASTER"
+                    }, 
+                    "type": "BaseCache", 
+                    "forward_snoops": true, 
+                    "cw_first": true, 
+                    "use_set_part": false, 
+                    "tgts_per_mshr": 20, 
+                    "assoc": 39, 
+                    "prefetch_on_access": false, 
+                    "split_mshrq": false, 
+                    "do_cache_trace": false, 
+                    "prioritizeRequests": false, 
+                    "split_rport": false, 
+                    "name": "icache", 
+                    "mshrs": 10, 
+                    "hash_delay": 1, 
+                    "subblock_size": 0, 
+                    "cpu_side": {
+                        "peer": "system.cpu.icache_port", 
+                        "role": "SLAVE"
+                    }, 
+                    "path": "system.cpu.icache", 
+                    "two_queue": false
+                }, 
+                "defer_registration": false, 
+                "interrupts": {
+                    "path": "system.cpu.interrupts", 
+                    "type": "ArmInterrupts", 
+                    "name": "interrupts", 
+                    "cxx_class": "ArmISA::Interrupts"
+                }, 
+                "max_insts_all_threads": 0, 
+                "path": "system.cpu", 
+                "workload": [
+                    {
+                        "gid": 100, 
+                        "ppid": 99, 
+                        "name": "workload", 
+                        "pid": 0, 
+                        "simpoint": 0, 
+                        "egid": 100, 
+                        "euid": 100, 
+                        "cxx_class": "LiveProcess", 
+                        "path": "system.cpu.workload", 
+                        "max_stack_size": 67108864, 
+                        "type": "LiveProcess", 
+                        "uid": 100
+                    }
+                ], 
+                "name": "cpu", 
+                "dtb": {
+                    "name": "dtb", 
+                    "cxx_class": "ArmISA::TLB", 
+                    "walker": {
+                        "save_trace": false, 
+                        "name": "walker", 
+                        "clock": 1, 
+                        "cxx_class": "ArmISA::TableWalker", 
+                        "path": "system.cpu.dtb.walker", 
+                        "type": "ArmTableWalker", 
+                        "port": {
+                            "peer": "system.tol2bus.slave[3]", 
+                            "role": "MASTER"
+                        }
+                    }, 
+                    "path": "system.cpu.dtb", 
+                    "type": "ArmTLB", 
+                    "size": 64
+                }, 
+                "max_insts_any_thread": 2000000000, 
+                "simulate_inst_stalls": false, 
+                "progress_interval": 0.0, 
+                "dcache_port": {
+                    "peer": "system.cpu.dcache.cpu_side", 
+                    "role": "MASTER"
+                }, 
+                "dcache": {
+                    "save_trace": false, 
+                    "use_way_part": false, 
+                    "cxx_class": "BaseCache", 
+                    "write_buffers": 8, 
+                    "is_top_level": true, 
+                    "block_size": 128, 
+                    "size": 32768, 
+                    "latency": 1e-09, 
+                    "clock": 1, 
+                    "num_tcs": 2, 
+                    "trace_addr": 0, 
+                    "max_miss_count": 0, 
+                    "mem_side": {
+                        "peer": "system.tol2bus.slave[1]", 
+                        "role": "MASTER"
+                    }, 
+                    "type": "BaseCache", 
+                    "forward_snoops": true, 
+                    "cw_first": true, 
+                    "use_set_part": false, 
+                    "tgts_per_mshr": 20, 
+                    "assoc": 32, 
+                    "prefetch_on_access": false, 
+                    "split_mshrq": false, 
+                    "do_cache_trace": false, 
+                    "prioritizeRequests": false, 
+                    "split_rport": false, 
+                    "name": "dcache", 
+                    "mshrs": 10, 
+                    "hash_delay": 1, 
+                    "subblock_size": 0, 
+                    "cpu_side": {
+                        "peer": "system.cpu.dcache_port", 
+                        "role": "SLAVE"
+                    }, 
+                    "path": "system.cpu.dcache", 
+                    "two_queue": false
+                }, 
+                "max_loads_any_thread": 0, 
+                "tracer": {
+                    "path": "system.cpu.tracer", 
+                    "type": "ExeTracer", 
+                    "name": "tracer", 
+                    "cxx_class": "Trace::ExeTracer"
+                }
+            }
+        ], 
+        "l2": [
+            {
+                "save_trace": false, 
+                "use_way_part": false, 
+                "cxx_class": "BaseCache", 
+                "write_buffers": 8, 
+                "is_top_level": false, 
+                "block_size": 128, 
+                "size": 2097152, 
+                "latency": 3.3300000000000003e-09, 
+                "clock": 1, 
+                "num_tcs": 2, 
+                "trace_addr": 0, 
+                "max_miss_count": 0, 
+                "mem_side": {
+                    "peer": "system.membus.slave[1]", 
+                    "role": "MASTER"
+                }, 
+                "type": "BaseCache", 
+                "forward_snoops": true, 
+                "cw_first": true, 
+                "use_set_part": false, 
+                "tgts_per_mshr": 12, 
+                "assoc": 16, 
+                "prefetch_on_access": false, 
+                "split_mshrq": false, 
+                "do_cache_trace": false, 
+                "prioritizeRequests": false, 
+                "split_rport": false, 
+                "name": "l2", 
+                "mshrs": 20, 
+                "hash_delay": 1, 
+                "subblock_size": 0, 
+                "cpu_side": {
+                    "peer": "system.tol2bus.master[0]", 
+                    "role": "SLAVE"
+                }, 
+                "path": "system.l2", 
+                "two_queue": false
+            }
+        ], 
+        "fast_forward": true, 
+        "num_work_ids": 16, 
+        "work_item_id": -1, 
+        "work_begin_cpu_id_exit": -1
+    }, 
+    "time_sync_period": 0.1, 
+    "time_sync_spin_threshold": 9.999999999999999e-05, 
+    "cxx_class": "Root", 
+    "path": "root", 
+    "time_sync_enable": false, 
+    "type": "Root", 
+    "full_system": false
+}
