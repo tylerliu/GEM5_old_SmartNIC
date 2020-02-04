@@ -24,7 +24,7 @@ trillion = 1000000000000
 # once any nf reaches this number of ins, gem5 will enter real simulation. 
 # acl-fw warmup: 400k->5 Trillion ticks->10billion ins
 fast_forward_ins = 1 * billion
-final_ins = 10 * million
+final_ins = 100 * million
 
 # fast_forward_ins = 10000
 # final_ins = 1000000
@@ -47,12 +47,27 @@ multiprog = []
 for i in range(1, 1 << 6):
     prog_set = []
     bitn = bit_num(i)
-    if bitn not in [1, 2, 4]:
+    # if bitn not in [1, 2, 4]:
+    if bitn not in []:
         continue
     for j in range(6):
         if (i >> j) & 1 == 1:
             prog_set.append(nfinvoke[j])
     multiprog.append(prog_set)
+
+for i in range(6):
+    for j in range(6):
+        if j == i:
+            continue
+        for k in range(6):
+            if k == j or k == i:
+                continue
+            prog_set = []
+            prog_set.append(nfinvoke[i])
+            prog_set.append(nfinvoke[j])
+            prog_set.append(nfinvoke[k])
+            multiprog.append(prog_set)
+
 # print(multiprog, len(multiprog))
 
 def prog_set_to_cmd(prog_set):
@@ -75,13 +90,14 @@ if not os.path.exists(stdout_dir):
 if not os.path.exists(stderr_dir):
     os.makedirs(stderr_dir)
 
-l2_size = ['4MB', '2MB', '1MB', '512kB', '256kB']
+# l2_size = ['16MB', '8MB', '4MB', '2MB', '1MB']
+l2_size = ['4MB']
 l2_pri_mapping = {
-    '4MB': { 1: '4MB', 2: '2MB', 4: '1MB' },
+    '16MB': { 1: '16MB', 2: '8MB', 4: '4MB' },
+    '8MB': { 1: '8MB', 2: '4MB', 4: '2MB' },
+    '4MB': { 1: '4MB', 2: '2MB', 3: 'waypar', 4: '1MB' },
     '2MB': { 1: '2MB', 2: '1MB', 4: '512kB' },
     '1MB': { 1: '1MB', 2: '512kB', 4: '256kB' },
-    '512kB': { 1: '512kB', 2: '256kB', 4: '128kB' },
-    '256kB': { 1: '256kB', 2: '128kB', 4: '64kB' },
 }
 
 all_commands = []
@@ -109,8 +125,12 @@ def gen_scripts():
                     command += "    --cacheline_size=128 \\\n"
                     command += "    --caches --l2cache \\\n"
                     if mode == 'tp':
-                        command += "    --l2config=private \\\n"
-                        command += "    --l2_size=" + l2_pri + " --l2_assoc=16 \\\n"
+                        if nf_set_len == 3: 
+                            command += "    --l2config=waypartition \\\n"
+                            command += "    --l2_size=" + l2_pri + " --l2_assoc=16 \\\n"
+                        else:    
+                            command += "    --l2config=setpartition \\\n"
+                            command += "    --l2_size=" + l2_pri + " --l2_assoc=16 \\\n"
                     else:
                         command += "    --l2config=shared \\\n"
                         command += "    --l2_size=" + l2 + " --l2_assoc=16 \\\n"
@@ -131,8 +151,9 @@ def gen_scripts():
                     command += "    --p0=/users/yangzhou/NF-GEM5/" + nf_set[0] + " \\\n"
                     if nf_set_len >= 2:
                         command += "    --p1=/users/yangzhou/NF-GEM5/" + nf_set[1] + " \\\n"
-                    if nf_set_len >= 4:
+                    if nf_set_len >= 3:
                         command += "    --p2=/users/yangzhou/NF-GEM5/" + nf_set[2] + " \\\n"
+                    if nf_set_len >= 4:
                         command += "    --p3=/users/yangzhou/NF-GEM5/" + nf_set[3] + " \\\n"
                     command += "    > " + results_dir + "/stdout_" + filename + ".out \\\n"
                     command += "    2> " + stderr_dir + "/stderr_" + filename + ".out"

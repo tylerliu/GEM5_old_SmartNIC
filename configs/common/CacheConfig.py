@@ -139,7 +139,23 @@ def config_l1( options, system ):
 # L2
 #------------------------------------------------------------------------------
 def config_l2( options, system ):
-    if options.l2config == 'private':
+    # for 3 domains only (4MB in total):
+    cachesizes = ['1280kB', '1280kB', '1536kB']
+    ways = [5, 5, 6]
+
+    if options.l2config == 'waypartition':
+        system.l2 = [ 
+                L2Cache( 
+                    size = cachesizes[i],
+                    assoc = ways[i],
+                    save_trace = options.do_cache_trace,
+                    l3_trace_file = options.l2tracefile,
+                    block_size=options.cacheline_size 
+                ) 
+                for i in xrange( options.num_cpus )
+            ]
+        system.tol2bus = [NoncoherentBus() for i in xrange( options.num_cpus )]
+    elif options.l2config == 'setpartition':
         system.l2 = [ 
                 L2Cache( 
                     size = options.l2_size,
@@ -165,7 +181,7 @@ def config_l2( options, system ):
 # Connect private L2 caches to the cached ports of each cpu (usually l1)
 # through system.tol2bus
 def connect_l2( options, system ):
-    if options.l2config == 'private':
+    if options.l2config in ['setpartition', 'waypartition']:
         for i in xrange(options.num_cpus):
             if options.l2cache:
                 system.cpu[i].connectAllPorts(system.tol2bus[i])
