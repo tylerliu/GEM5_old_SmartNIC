@@ -31,7 +31,8 @@ from m5.objects import *
 class L1Cache(BaseCache):
     assoc = 2
     block_size = 64
-    latency = '1ns'
+    # latency = '1ns'
+    latency = '8.3ns'
     mshrs = 10
     tgts_per_mshr = 20
     is_top_level = True
@@ -40,7 +41,8 @@ class L1Cache(BaseCache):
 class L2Cache(BaseCache):
     assoc = 8
     block_size = 64
-    latency = '3.33ns'
+    # latency = '3.33ns'
+    latency = '55.8ns'
     mshrs = 20
     tgts_per_mshr = 12
     do_cache_trace = False

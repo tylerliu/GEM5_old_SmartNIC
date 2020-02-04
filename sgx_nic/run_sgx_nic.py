@@ -47,8 +47,8 @@ multiprog = []
 for i in range(1, 1 << 6):
     prog_set = []
     bitn = bit_num(i)
-    # if bitn not in [1, 2, 4]:
-    if bitn not in []:
+    if bitn not in [1, 2, 4]:
+    # if bitn not in []:
         continue
     for j in range(6):
         if (i >> j) & 1 == 1:
