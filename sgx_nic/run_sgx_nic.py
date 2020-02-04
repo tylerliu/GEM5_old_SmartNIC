@@ -90,8 +90,8 @@ if not os.path.exists(stdout_dir):
 if not os.path.exists(stderr_dir):
     os.makedirs(stderr_dir)
 
-# l2_size = ['16MB', '8MB', '4MB', '2MB', '1MB']
-l2_size = ['4MB']
+l2_size = ['16MB', '8MB', '4MB', '2MB', '1MB']
+# l2_size = ['4MB']
 l2_pri_mapping = {
     '16MB': { 1: '16MB', 2: '8MB', 4: '4MB' },
     '8MB': { 1: '8MB', 2: '4MB', 4: '2MB' },
@@ -108,6 +108,9 @@ def gen_scripts():
             nf_set_len = len(nf_set)
             cmd = prog_set_to_cmd(nf_set)
             for l2 in l2_size:
+                if nf_set_len == 3:
+                    if l2 != '4MB':
+                        continue
                 l2_pri = l2_pri_mapping[l2][nf_set_len]
                 for mode in modes:
                     # baseline - none;
