@@ -98,8 +98,9 @@ if not os.path.exists(stderr_dir):
 #     '2MB': { 1: '2MB', 2: '1MB', 4: '512kB' },
 #     '1MB': { 1: '1MB', 2: '512kB', 4: '256kB' },
 # }
-l2_size = ['512kB', '256kB', '128kB', '64kB', '32kB', '16kB', '8kB', '4kB']
+l2_size = ['1MB', '512kB', '256kB', '128kB', '64kB', '32kB', '16kB', '8kB']
 l2_pri_mapping = {
+    '1MB': { 2: '512kB' },
     '512kB': { 2: '256kB' },
     '256kB': { 2: '128kB' },
     '128kB': { 2: '64kB' },
@@ -107,7 +108,6 @@ l2_pri_mapping = {
     '32kB': { 2: '16kB' },
     '16kB': { 2: '8kB' },
     '8kB': { 2: '4kB' },
-    '4kB': { 2: '2kB' },
 }
 
 
