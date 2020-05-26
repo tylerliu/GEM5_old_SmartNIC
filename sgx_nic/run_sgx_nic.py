@@ -75,7 +75,7 @@ def prog_set_to_cmd(prog_set):
     num_prog = len(prog_set)
     for i in range(num_prog - 1):
         ret += prog_set[i] + '.'
-    ret += prog_set[-1]
+    ret += prog_set[-1] 
     return ret
 
 if not os.path.exists(scriptgen_dir):
@@ -90,15 +90,26 @@ if not os.path.exists(stdout_dir):
 if not os.path.exists(stderr_dir):
     os.makedirs(stderr_dir)
 
-l2_size = ['16MB', '8MB', '4MB', '2MB', '1MB']
-# l2_size = ['4MB']
+# l2_size = ['16MB', '8MB', '4MB', '2MB', '1MB']
+# l2_pri_mapping = {
+#     '16MB': { 1: '16MB', 2: '8MB', 4: '4MB' },
+#     '8MB': { 1: '8MB', 2: '4MB', 4: '2MB' },
+#     '4MB': { 1: '4MB', 2: '2MB', 3: 'waypar', 4: '1MB' },
+#     '2MB': { 1: '2MB', 2: '1MB', 4: '512kB' },
+#     '1MB': { 1: '1MB', 2: '512kB', 4: '256kB' },
+# }
+l2_size = ['512kB', '256kB', '128kB', '64kB', '32kB', '16kB', '8kB', '4kB']
 l2_pri_mapping = {
-    '16MB': { 1: '16MB', 2: '8MB', 4: '4MB' },
-    '8MB': { 1: '8MB', 2: '4MB', 4: '2MB' },
-    '4MB': { 1: '4MB', 2: '2MB', 3: 'waypar', 4: '1MB' },
-    '2MB': { 1: '2MB', 2: '1MB', 4: '512kB' },
-    '1MB': { 1: '1MB', 2: '512kB', 4: '256kB' },
+    '512kB': { 2: '256kB' },
+    '256kB': { 2: '128kB' },
+    '128kB': { 2: '64kB' },
+    '64kB': { 2: '32kB' },
+    '32kB': { 2: '16kB' },
+    '16kB': { 2: '8kB' },
+    '8kB': { 2: '4kB' },
+    '4kB': { 2: '2kB' },
 }
+
 
 all_commands = []
 
@@ -111,6 +122,8 @@ def gen_scripts():
                 if nf_set_len == 3:
                     if l2 != '4MB':
                         continue
+                if nf_set_len != 2:
+                    continue
                 l2_pri = l2_pri_mapping[l2][nf_set_len]
                 for mode in modes:
                     # baseline - none;
@@ -178,7 +191,7 @@ def exe_gem5_sim(cmd_line):
 
 def run_gem5_sim(commands):
     # 1 thread is left.
-    pool = ThreadPool(55)
+    pool = ThreadPool(63)
     results = pool.map(exe_gem5_sim, commands)
     pool.close()
     pool.join()
@@ -189,12 +202,8 @@ if __name__ == "__main__":
     gen_scripts()
     num_cmd = len(all_commands)
     print(f'The number of gem5 simulations is {num_cmd}')
-    num_par = int(num_cmd / 8) + 1
+    num_par = int(num_cmd / 4)
     run_gem5_sim(all_commands[0:num_par])
     # run_gem5_sim(all_commands[num_par:num_par * 2])
     # run_gem5_sim(all_commands[num_par * 2:num_par * 3])
-    # run_gem5_sim(all_commands[num_par * 3:num_par * 4])
-    # run_gem5_sim(all_commands[num_par * 4:num_par * 5])
-    # run_gem5_sim(all_commands[num_par * 5:num_par * 6])
-    # run_gem5_sim(all_commands[num_par * 6:num_par * 7])
-    # run_gem5_sim(all_commands[num_par * 7:])
+    # run_gem5_sim(all_commands[num_par * 3:])
