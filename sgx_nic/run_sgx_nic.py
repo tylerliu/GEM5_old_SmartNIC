@@ -168,13 +168,13 @@ def gen_scripts():
                     command += "    --maxinsts=" + str(final_ins) +  "\\\n"
                     command += "    --maxtick=" + str(final_ticks) + " \\\n"
                     command += "    --numpids=" + str(nf_set_len) + " \\\n"
-                    command += "    --p0=/users/yangzhou/NF-GEM5/" + nf_set[0] + " \\\n"
+                    command += "    --p0=/users/yangzhou/NFShield/" + nf_set[0] + " \\\n"
                     if nf_set_len >= 2:
-                        command += "    --p1=/users/yangzhou/NF-GEM5/" + nf_set[1] + " \\\n"
+                        command += "    --p1=/users/yangzhou/NFShield/" + nf_set[1] + " \\\n"
                     if nf_set_len >= 3:
-                        command += "    --p2=/users/yangzhou/NF-GEM5/" + nf_set[2] + " \\\n"
+                        command += "    --p2=/users/yangzhou/NFShield/" + nf_set[2] + " \\\n"
                     if nf_set_len >= 4:
-                        command += "    --p3=/users/yangzhou/NF-GEM5/" + nf_set[3] + " \\\n"
+                        command += "    --p3=/users/yangzhou/NFShield/" + nf_set[3] + " \\\n"
                     command += "    > " + results_dir + "/stdout_" + filename + ".out \\\n"
                     command += "    2> " + stderr_dir + "/stderr_" + filename + ".out"
                     script.write(f'{command}\n')

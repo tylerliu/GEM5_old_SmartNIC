@@ -16,7 +16,7 @@ build/ARM/gem5.fast \
     --devicecfg=./ext/DRAMSim2/ini/DDR3_micron_16M_8B_x8_sg15.ini \
     --systemcfg=./ext/DRAMSim2/system_tp.ini \
     --numpids=1 \
-    --p0='/users/yangzhou/NF-GEM5/acl-fw'\
+    --p0='/users/yangzhou/NFShield/acl-fw'\
     # --fast-forward=1000000000 \
     # --outputfile=/dev/null \
     # > results/stdout_tp_detailed_astartl6_astartl6_c4MB.out

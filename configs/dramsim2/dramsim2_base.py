@@ -124,6 +124,58 @@ def add_options():
                 help="workload for processor 3, default is an echo")
         parser.add_option("--p3threadID", type="int", default=3,
                 help="timing compartment id for p3")
+
+        parser.add_option("--p4",type="string", default="echo \"no p4!\"",
+                help="workload for processor 4, default is an echo")
+        parser.add_option("--p4threadID", type="int", default=4,
+                help="timing compartment id for p4")
+        parser.add_option("--p5",type="string", default="echo \"no p5!\"",
+                help="workload for processor 5, default is an echo")
+        parser.add_option("--p5threadID", type="int", default=5,
+                help="timing compartment id for p5")
+        parser.add_option("--p6",type="string", default="echo \"no p6!\"",
+                help="workload for processor 6, default is an echo")
+        parser.add_option("--p6threadID", type="int", default=6,
+                help="timing compartment id for p6")
+        parser.add_option("--p7",type="string", default="echo \"no p7!\"",
+                help="workload for processor 7, default is an echo")
+        parser.add_option("--p7threadID", type="int", default=7,
+                help="timing compartment id for p7")
+
+        parser.add_option("--p8",type="string", default="echo \"no p8!\"",
+                help="workload for processor 8, default is an echo")
+        parser.add_option("--p8threadID", type="int", default=8,
+                help="timing compartment id for p8")
+        parser.add_option("--p9",type="string", default="echo \"no p9!\"",
+                help="workload for processor 9, default is an echo")
+        parser.add_option("--p9threadID", type="int", default=9,
+                help="timing compartment id for p9")
+        parser.add_option("--p10",type="string", default="echo \"no p10!\"",
+                help="workload for processor 10, default is an echo")
+        parser.add_option("--p10threadID", type="int", default=10,
+                help="timing compartment id for p10")
+        parser.add_option("--p11",type="string", default="echo \"no p11!\"",
+                help="workload for processor 11, default is an echo")
+        parser.add_option("--p11threadID", type="int", default=11,
+                help="timing compartment id for p11")
+
+        parser.add_option("--p12",type="string", default="echo \"no p12!\"",
+                help="workload for processor 12, default is an echo")
+        parser.add_option("--p12threadID", type="int", default=12,
+                help="timing compartment id for p12")
+        parser.add_option("--p13",type="string", default="echo \"no p13!\"",
+                help="workload for processor 13, default is an echo")
+        parser.add_option("--p13threadID", type="int", default=13,
+                help="timing compartment id for p13")
+        parser.add_option("--p14",type="string", default="echo \"no p14!\"",
+                help="workload for processor 14, default is an echo")
+        parser.add_option("--p14threadID", type="int", default=14,
+                help="timing compartment id for p14")
+        parser.add_option("--p15",type="string", default="echo \"no p15!\"",
+                help="workload for processor 15, default is an echo")
+        parser.add_option("--p15threadID", type="int", default=15,
+                help="timing compartment id for p15")
+
         parser.add_option("--gentrace", action="store_true", default=False,
                 help="generate the trace for benchmarks.")
         parser.add_option("--numpids", type="int", default=2,
