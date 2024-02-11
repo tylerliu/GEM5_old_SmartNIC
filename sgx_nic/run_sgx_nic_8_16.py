@@ -26,10 +26,9 @@ billion = 1000000000
 trillion = 1000000000000
 # once any nf reaches this number of ins, gem5 will enter real simulation. 
 # acl-fw warmup: 400k->5 Trillion ticks->10billion ins
-# fast_forward_ins = 1 * billion
-fast_forward_ins = 750 * million
+fast_forward_ins = 1 * billion
 # final_ins = 100 * million
-final_ins = 1 * million
+final_ins = 10 * million
 
 # fast_forward_ins = 10000
 # final_ins = 1000000
