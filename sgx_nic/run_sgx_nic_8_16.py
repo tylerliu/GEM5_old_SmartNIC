@@ -26,8 +26,10 @@ billion = 1000000000
 trillion = 1000000000000
 # once any nf reaches this number of ins, gem5 will enter real simulation. 
 # acl-fw warmup: 400k->5 Trillion ticks->10billion ins
-fast_forward_ins = 1 * billion
-final_ins = 100 * million
+# fast_forward_ins = 1 * billion
+fast_forward_ins = 750 * million
+# final_ins = 100 * million
+final_ins = 1 * million
 
 # fast_forward_ins = 10000
 # final_ins = 1000000
@@ -150,8 +152,9 @@ if __name__ == "__main__":
     gen_scripts()
     num_cmd = len(all_commands)
     print(f'The number of gem5 simulations is {num_cmd}')
-    # num_par = int(num_cmd / 4)
-    # run_gem5_sim(all_commands[0:64])
+    num_par = 60
+    run_gem5_sim(all_commands[0:num_par])
     # run_gem5_sim(all_commands[num_par:num_par * 2])
     # run_gem5_sim(all_commands[num_par * 2:num_par * 3])
-    # run_gem5_sim(all_commands[num_par * 3:])
+    # run_gem5_sim(all_commands[num_par * 3:num_par * 3 + 30])
+    # run_gem5_sim(all_commands[num_par * 3 + 30:])

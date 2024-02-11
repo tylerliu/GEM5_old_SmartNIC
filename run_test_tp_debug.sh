@@ -1,5 +1,5 @@
 #!/bin/bash
-build/ARM/gem5.fast \
+gdb --args build/ARM/gem5.debug \
     --remote-gdb-port=0 \
     --outdir=/users/yangzhou/GEM5_DRAMSim2/sgx_nic/m5out/test_tp \
     --stats-file=test_tp_stats.txt \
@@ -18,7 +18,7 @@ build/ARM/gem5.fast \
     --devicecfg=./ext/DRAMSim2/ini/DDR3_micron_16M_8B_x8_sg15.ini \
     --systemcfg=./ext/DRAMSim2/system_tp.ini \
     --outputfile=/dev/null \
-    --fast-forward=750000000 \
+    --fast-forward=2000000 \
     --maxinsts=1000000\
     --maxtick=2000000000000 \
     --numpids=16 \
