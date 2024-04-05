@@ -1,7 +1,7 @@
 #!/bin/bash
 build/ARM/gem5.opt \
     --remote-gdb-port=0 \
-    --outdir=/GEM5_DRAMSim2/sgx_nic/m5out/test_tp \
+    --outdir=/gem5/sgx_nic/m5out/test_tp \
     --stats-file=test_tp_stats.txt \
     configs/dramsim2/dramsim2_se.py \
     --cpu-type=detailed --clock=2.4GHz \
@@ -38,5 +38,5 @@ build/ARM/gem5.opt \
     --p13=/NFShield/dpi \
     --p14=/NFShield/lpm \
     --p15=/NFShield/monitoring \
-    # > /GEM5_DRAMSim2/sgx_nic/results/stdout_test_tp.out \
-    # 2> /GEM5_DRAMSim2/sgx_nic/stderr/stderr_test_tp.out
+    # > /gem5/sgx_nic/results/stdout_test_tp.out \
+    # 2> /gem5/sgx_nic/stderr/stderr_test_tp.out

@@ -92,7 +92,7 @@ def gen_scripts():
               command = "#!/bin/bash\n"
               command += "build/ARM/gem5.opt \\\n"
               command += "    --remote-gdb-port=0 \\\n"
-              command += "    --outdir=/GEM5_DRAMSim2/sgx_nic/m5out/" + filename + " \\\n"
+              command += "    --outdir=/gem5/sgx_nic/m5out/" + filename + " \\\n"
               command += "    --stats-file=" + filename + "_stats.txt \\\n"
               command += "    configs/dramsim2/dramsim2_se.py \\\n"
               command += "    --cpu-type=" + cpu + " --clock=2.4GHz \\\n"
