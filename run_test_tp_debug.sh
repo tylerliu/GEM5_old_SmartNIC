@@ -1,5 +1,5 @@
 #!/bin/bash
-gdb --args build/ARM/gem5.debug \
+gdb --args build/ARM/gem5.opt \
     --remote-gdb-port=0 \
     --outdir=/gem5/sgx_nic/m5out/test_tp \
     --stats-file=test_tp_stats.txt \

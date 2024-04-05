@@ -103,17 +103,18 @@ System::System(Params *p)
     pagePtr[2] = pagePtr[4] >> 1;
     pagePtr[1] = pagePtr[2] >> 1;
     
+    pagePtr[12] = pagePtr[8] + pagePtr[4];
+    
+    pagePtr[6] = pagePtr[4] + pagePtr[2];
+    pagePtr[10] = pagePtr[8] + pagePtr[2];
+    pagePtr[14] = pagePtr[12] + pagePtr[2];
+
     pagePtr[3] = pagePtr[2] + pagePtr[1];
     pagePtr[5] = pagePtr[4] + pagePtr[1];
-    pagePtr[6] = pagePtr[5] + pagePtr[1];
     pagePtr[7] = pagePtr[6] + pagePtr[1];
-
     pagePtr[9] = pagePtr[8] + pagePtr[1];
-    pagePtr[10] = pagePtr[9] + pagePtr[1];
     pagePtr[11] = pagePtr[10] + pagePtr[1];
-    pagePtr[12] = pagePtr[11] + pagePtr[1];
     pagePtr[13] = pagePtr[12] + pagePtr[1];
-    pagePtr[14] = pagePtr[13] + pagePtr[1];
     pagePtr[15] = pagePtr[14] + pagePtr[1];
     fixAddr = p->fixAddr;
 
