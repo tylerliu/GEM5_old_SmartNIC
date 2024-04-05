@@ -226,6 +226,8 @@ class Linux : public OperatingSystem
     static const unsigned TGT_EAGAIN      = 11;
     static const unsigned TGT_EWOULDBLOCK = TGT_EAGAIN;
 
+    static const int TGT_AT_FDCWD     = -100;
+
 };  // class Linux
 
 #endif // __LINUX_HH__

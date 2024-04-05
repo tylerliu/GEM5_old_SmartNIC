@@ -22,3 +22,5 @@ RUN sed -i 's:/users/yangzhou/:/:g' *.c
 RUN make
 
 WORKDIR /gem5
+
+CMD ["sleep", "infinity"]

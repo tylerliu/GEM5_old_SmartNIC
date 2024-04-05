@@ -594,6 +594,89 @@ ioctlFunc(SyscallDesc *desc, int callnum, LiveProcess *process,
     return -ENOTTY;
 }
 
+/// Target openat() handler.
+template <class OS>
+SyscallReturn
+openatFunc(SyscallDesc *desc, int callnum, LiveProcess *process,
+         ThreadContext *tc)
+{
+    int index = 0;
+    std::string path;
+    int dirfd = process->getSyscallArg(tc, index);
+    if (dirfd != OS::TGT_AT_FDCWD && (dirfd < 0 || process->sim_fd(dirfd) < 0)) {
+        // doesn't map to any simulator dirfd: not a valid target dirfd
+        return -EBADF;
+    }
+
+    if (!tc->getMemProxy().tryReadString(path,
+                process->getSyscallArg(tc, index)))
+        return -EFAULT;
+
+    if (path == "/dev/sysdev0") {
+        // This is a memory-mapped high-resolution timer device on Alpha.
+        // We don't support it, so just punt.
+        warn("Ignoring open(%s, ...)\n", path);
+        return -ENOENT;
+    }
+
+    int tgtFlags = process->getSyscallArg(tc, index);
+    int mode = process->getSyscallArg(tc, index);
+    int hostFlags = 0;
+
+    // translate open flags
+    for (int i = 0; i < OS::NUM_OPEN_FLAGS; i++) {
+        if (tgtFlags & OS::openFlagTable[i].tgtFlag) {
+            tgtFlags &= ~OS::openFlagTable[i].tgtFlag;
+            hostFlags |= OS::openFlagTable[i].hostFlag;
+        }
+    }
+
+    // any target flags left?
+    if (tgtFlags != 0)
+        warn("Syscall: open: cannot decode flags 0x%x", tgtFlags);
+
+#ifdef __CYGWIN32__
+    hostFlags |= O_BINARY;
+#endif
+
+    // Adjust path for current working directory
+    // for openat, the path is relative to the directory fd
+    if (dirfd == OS::TGT_AT_FDCWD || path[0] == '/') {
+        path = process->fullPath(path);
+    } else {
+        // get the directory path from the fd_map
+        std::string dir_path = process->sim_fd_obj(dirfd)->filename;
+        if (dir_path.empty()) {
+            warn("openat: invalid dirfd: %s\n", dir_path.c_str());
+            return -EBADF;
+        }
+        if (dir_path[-1] != '/')
+            dir_path.append("/");
+        path = dir_path + path;
+    }
+    
+
+    DPRINTF(SyscallVerbose, "opening file %s\n", path.c_str());
+
+    int fd;
+    int local_errno;
+    if (startswith(path, "/proc/") || startswith(path, "/system/") ||
+        startswith(path, "/platform/") || startswith(path, "/sys/")) {
+        // It's a proc/sys entry and requires special handling
+        fd = OS::openSpecialFile(path, process, tc);
+        local_errno = ENOENT;
+     } else {
+        // open the file
+        fd = open(path.c_str(), hostFlags, mode);
+        local_errno = errno;
+     }
+
+    if (fd == -1)
+        return -local_errno;
+
+    return process->alloc_fd(fd, path.c_str(), hostFlags, mode, false);
+}
+
 /// Target open() handler.
 template <class OS>
 SyscallReturn
