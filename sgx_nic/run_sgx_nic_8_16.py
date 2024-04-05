@@ -90,9 +90,9 @@ def gen_scripts():
               bash_filename = f'{scriptgen_dir}/run_{filename}.sh'
               script = open(bash_filename, "w")
               command = "#!/bin/bash\n"
-              command += "build/ARM/gem5.fast \\\n"
+              command += "build/ARM/gem5.opt \\\n"
               command += "    --remote-gdb-port=0 \\\n"
-              command += "    --outdir=/users/yangzhou/GEM5_DRAMSim2/sgx_nic/m5out/" + filename + " \\\n"
+              command += "    --outdir=/GEM5_DRAMSim2/sgx_nic/m5out/" + filename + " \\\n"
               command += "    --stats-file=" + filename + "_stats.txt \\\n"
               command += "    configs/dramsim2/dramsim2_se.py \\\n"
               command += "    --cpu-type=" + cpu + " --clock=2.4GHz \\\n"
@@ -119,7 +119,7 @@ def gen_scripts():
               command += "    --maxtick=" + str(final_ticks) + " \\\n"
               command += "    --numpids=" + str(num_nfs) + " \\\n"
               for i in range(num_nfs):
-                command += f"    --p{i}=/users/yangzhou/NFShield/" + all_nfs[i] + " \\\n"
+                command += f"    --p{i}=/NFShield/" + all_nfs[i] + " \\\n"
               command += "    > " + results_dir + "/stdout_" + filename + ".out \\\n"
               command += "    2> " + stderr_dir + "/stderr_" + filename + ".out"
               script.write(f'{command}\n')
