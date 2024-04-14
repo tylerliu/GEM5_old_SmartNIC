@@ -43,12 +43,7 @@ def bit_num(x):
             cnt += 1
     return cnt        
 
-multiprog = []
-for i in nfinvoke:
-    multiprog.append((i,))
-    for j in nfinvoke:
-        if i >= j: continue
-        multiprog.append((i, j))
+multiprog = [nfinvoke, nfinvoke + nfinvoke]
 
 # print(multiprog, len(multiprog))
 
@@ -72,14 +67,9 @@ if not os.path.exists(stdout_dir):
 if not os.path.exists(stderr_dir):
     os.makedirs(stderr_dir)
 
-l2_size = ['16MB', '4MB', '1MB', '256kB', '64kB', '16kB']
+l2_size = ['4MB']
 l2_pri_mapping = {
-    '16MB': { 1: '16MB', 2: '8MB'},
-    '4MB': { 1: '4MB', 2: '2MB'},
-    '1MB': { 1: '1MB', 2: '512kB'},
-    '256kB': { 1: '256kB', 2: '128kB'},
-    '64kB': { 1: '64kB', 2: '32kB'},
-    '16kB': { 1: '16kB', 2: '8kB'},
+    '4MB': { 6: '512kB', 12: '256kB'}
 }
 
 all_commands = []
@@ -126,13 +116,8 @@ def gen_scripts():
                     command += "    --maxinsts=" + str(final_ins) +  "\\\n"
                     command += "    --maxtick=" + str(final_ticks) + " \\\n"
                     command += "    --numpids=" + str(nf_set_len) + " \\\n"
-                    command += "    --p0=/NFShield/" + nf_set[0] + " \\\n"
-                    if nf_set_len >= 2:
-                        command += "    --p1=/NFShield/" + nf_set[1] + " \\\n"
-                    if nf_set_len >= 3:
-                        command += "    --p2=/NFShield/" + nf_set[2] + " \\\n"
-                    if nf_set_len >= 4:
-                        command += "    --p3=/NFShield/" + nf_set[3] + " \\\n"
+                    for i, w in enumerate(nf_set):
+                        command += f"    --p{i}=/NFShield/{w} \\\n"
                     command += "    > " + results_dir + "/stdout_" + filename + ".out \\\n"
                     command += "    2> " + stderr_dir + "/stderr_" + filename + ".out"
                     script.write(f'{command}\n')
