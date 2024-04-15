@@ -43,7 +43,14 @@ def bit_num(x):
             cnt += 1
     return cnt        
 
-multiprog = [nfinvoke, nfinvoke + nfinvoke]
+multiprog = []
+for i in nfinvoke:
+    for j in nfinvoke:
+        if i >= j: continue
+        compliment_set = tuple(sorted(filter(lambda x: x != i and x != j, nfinvoke)))
+        multiprog.append(compliment_set) # set of 4 NFs
+        multiprog.append((*nfinvoke, i, j)) # set of 8 NFs
+        multiprog.append((*nfinvoke, *nfinvoke, *compliment_set)) # set of 16 NFs
 
 # print(multiprog, len(multiprog))
 
@@ -69,7 +76,7 @@ if not os.path.exists(stderr_dir):
 
 l2_size = ['4MB']
 l2_pri_mapping = {
-    '4MB': { 6: '512kB', 12: '256kB'}
+    '4MB': { 4: '1MB', 8: '512kB', 16: '256kB'}
 }
 
 all_commands = []
